@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - AI Trilead</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Basic Reset and Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .cart {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .cart h1 {
+            margin: 0;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #333;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item p {
+            margin: 0;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #333;
+            padding-top: 20px;
+        }
+
+        .btn {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="header">
+        <h1>AI Trilead</h1>
+        <nav class="navbar">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="featured.html">Featured</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="contact.html">Contact</a>
+            <a href="cart.html">Cart</a>
+        </nav>
+    </header>
+    
+    <section class="cart">
+        <h1>Your <span>Cart</span></h1>
+        <div class="cart-items">
+            <!-- Cart items will be inserted here by JavaScript -->
+        </div>
+        <div class="cart-total">
+            <h2>Total: $<span id="cart-total">0.00</span></h2>
+            <a href="main.html" class="btn">Proceed to Checkout</a>
+        </div>
+        <div class="cart-actions">
+            <a href="main.html" class="btn">Back to Home</a>
+            <button class="btn btn-danger" id="clear-cart">Clear All</button>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>About Us</h3>
+                <p>AI world here you all get advanced technology, new invention products reach near to you. Believe us, we are always with you...</p>
+                <a href="#"><img src="https://img.icons8.com/ios-filled/50/000000/facebook-new.png" alt="Facebook" width="30" height="30"></a>
+                <a href="#"><img src="https://img.icons8.com/ios-filled/50/000000/twitter.png" alt="Twitter" width="30" height="30"></a>
+                <a href="https://www.instagram.com/nani.rao.032?igsh=aWE4eXV6eTM3Zmx5"><img src="https://img.icons8.com/ios-filled/50/000000/instagram-new.png" alt="Instagram" width="30" height="30"></a>
+            </div>
+            <div class="box">
+                <h3>Quick Links</h3>
+                <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i> Home</a>
+                <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i> Products</a>
+                <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i> Featured</a>
+                <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i> Reviews</a>
+                <a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i> Contact</a>
+            </div>
+        </div>
+        <div class="credit">
+            <p><i class="fa fa-copyright" aria-hidden="true"></i> Created @ 2024 by <span>Thrinesh Rao, Web Designer</span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to update cart display
+        function updateCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartContainer = document.querySelector('.cart-items');
+            const totalElement = document.getElementById('cart-total');
+
+            let total = 0;
+            cartContainer.innerHTML = '';
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                cartContainer.innerHTML += `
+                    <div class="cart-item">
+                        <p>${item.name}</p>
+                        <p>$${item.price.toFixed(2)} x ${item.quantity}</p>
+                        <p>$${(item.price * item.quantity).toFixed(2)}</p>
+                    </div>
+                `;
+            });
+
+            totalElement.textContent = total.toFixed(2);
+        }
+
+        // Clear all items from the cart
+        document.getElementById('clear-cart').addEventListener('click', function() {
+            localStorage.removeItem('cart');
+            updateCart();
+        });
+
+        // Update cart when the page loads
+        document.addEventListener('DOMContentLoaded', updateCart);
+    </script>
+</body>
+</html>
